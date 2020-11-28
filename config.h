@@ -13,7 +13,11 @@ static const unsigned int gappov    = 30;       /* vert outer gap between window
 static const int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "monospace:size=12" };
+static const char *fonts[]          = { 
+                                        "monospace:size=12", 
+                                        "NotoColorEmoji:size=12",
+                                        "siji:size=14"
+                                      };
 static const char dmenufont[]       = "monospace:size=12";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
@@ -21,19 +25,19 @@ static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
 static const char col_cyan[]        = "#005577";
 static const char col_1[]           = "#252a35";
-static const char col_2[]           = "#f9caff";
+static const char col_2[]           = "#ffbaff";
 static const char col_3[]           = "#606087";
 static const char col_4[]           = "#ff87d7";
-static const char col_5[]           = "#6272a4";
+static const char col_5[]           = "#765abf";
 static const char col_6[]           = "#bd93f9";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
-	[SchemeNorm] = { col_gray3, col_gray1,  col_gray2 },
-	[SchemeSel]  = { col_2,     col_3,      col_6 },
+	[SchemeNorm] = { col_gray4, col_5,      col_3 },
+	[SchemeSel]  = { col_2,     col_5,      col_6 },
 };
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+static const char *tags[] = { "", "", "", "", "", "", "", "", "" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -73,30 +77,30 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *termcmd[]  = { "/home/zoya/.scripts/spawn-term-cwd", NULL };
+static const char *dmenucmd[]   = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+static const char *termcmd[]    = { "/home/zoya/.scripts/spawn-term-cwd",   NULL };
 
 /* media keys */
-static const char *upvol[]      = { "/bin/sh", "-c", "$HOME/.scripts/volctl +5%", NULL };
-static const char *downvol[]    = { "/bin/sh", "-c", "$HOME/.scripts/volctl -5%", NULL };
-static const char *mutevol[]    = { "/bin/sh", "-c", "$HOME/.scripts/volctl toggle", NULL };
-static const char *upbright[]   = { "/bin/sh", "-c", "$HOME/.scripts/monctl 10%+", NULL };
-static const char *downbright[] = { "/bin/sh", "-c", "$HOME/.scripts/monctl 10%-", NULL };
+static const char *upvol[]      = { "/home/zoya/.scripts/volctl", "+5%",    NULL };
+static const char *downvol[]    = { "/home/zoya/.scripts/volctl", "-5%",    NULL };
+static const char *mutevol[]    = { "/home/zoya/.scripts/volctl", "toggle", NULL };
+static const char *upbright[]   = { "/home/zoya/.scripts/monctl", "10%+",   NULL };
+static const char *downbright[] = { "/home/zoya/.scripts/monctl", "10%-",   NULL };
 
 /* screenshot */
-static const char *sshot[] = { "/bin/sh", "-c", "$HOME/.scripts/screenshot", NULL };
-
-/* wifi */
-static const char *wifi[] = { "/bin/sh", "-c", "$HOME/.scripts/wifictl", NULL };
+static const char *sshot[]      = { "/home/zoya/.scripts/screenshot",       NULL };
 
 /* File explorer */
-static const char *files[] = { "/usr/bin/dolphin", NULL };
+static const char *files[]      = { "/home/zoya/.scripts/vifmstart",        NULL };
 
 /* Screen lock */
-static const char *lock[] = { "/usr/bin/dm-tool", "switch-to-greeter", NULL };
+static const char *lock[]       = { "/usr/bin/dm-tool", "switch-to-greeter",NULL };
+
+/* wifi */
+static const char *wifi[]       = { "/usr/bin/networkmanager_dmenu",        NULL };
 
 /* Vim */
-static const char *vim[] = { "/usr/bin/alacritty", "-e", "vim", NULL };
+static const char *vim[]        = { "/home/zoya/.scripts/vimstart",         NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -109,6 +113,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
+    { MODKEY,                       XK_equal,  setmfact,       {.f = 1.5} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,                       XK_q,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
@@ -122,8 +127,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-    { MODKEY|ShiftMask,             XK_i,      spawn,          {.v = wifi } },
     { MODKEY,                       XK_e,      spawn,          {.v = files } },
+    { MODKEY|ShiftMask,             XK_i,      spawn,          {.v = wifi } },
     { MODKEY|ShiftMask,             XK_l,      spawn,          {.v = lock } },
     { MODKEY,                       XK_v,      spawn,          {.v = vim } },
     { 0,              XF86XK_AudioLowerVolume, spawn,          {.v = downvol } },
