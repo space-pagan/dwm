@@ -28,10 +28,19 @@ static const char col_3[]           = "#606087";
 static const char col_4[]           = "#ff87d7";
 static const char col_5[]           = "#765abf";
 static const char col_6[]           = "#bd93f9";
+static const char col_bg[]          = "#453570";
+static const unsigned int baralpha  = 0xbf; /* 75% */
+static const unsigned int borderalpha = OPAQUE;
 static const char *colors[][3]      = {
-	/*               fg         bg         border   */
-	[SchemeNorm] = { col_gray4, col_5,      col_3 },
-	[SchemeSel]  = { col_2,     col_5,      col_6 },
+	/*               fg         bg          border  */
+	[SchemeNorm] = { col_gray4, col_bg,      col_3 },
+	[SchemeSel]  = { col_2,     col_bg,      col_6 },
+};
+
+static const unsigned int alphas[][3] = {
+    /*               fg         bg          border  */
+    [SchemeNorm] = { OPAQUE, baralpha, borderalpha },
+    [SchemeSel]  = { OPAQUE, baralpha, borderalpha },
 };
 
 /* tagging */
