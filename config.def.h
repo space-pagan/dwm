@@ -81,30 +81,12 @@ static const Layout layouts[] = {
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
+#define TERMINAL "alacritty"
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[]   = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_5, "-nf", col_2, "-sb", col_6, "-sf", col_gray4, NULL };
 static const char *termcmd[]    = { "/home/zoya/.scripts/spawn-term-cwd",   NULL };
-
-/* media keys */
-static const char *upvol[]      = { "/home/zoya/.scripts/volctl", "+5%",    NULL };
-static const char *downvol[]    = { "/home/zoya/.scripts/volctl", "-5%",    NULL };
-static const char *mutevol[]    = { "/home/zoya/.scripts/volctl", "toggle", NULL };
-static const char *upbright[]   = { "/home/zoya/.scripts/monctl", "10%+",   NULL };
-static const char *downbright[] = { "/home/zoya/.scripts/monctl", "10%-",   NULL };
-
-/* screenshot */
-static const char *sshot[]      = { "/home/zoya/.scripts/screenshot",       NULL };
-
-/* File explorer */
-static const char *files[]      = { "/home/zoya/.scripts/vifmstart",        NULL };
-
-/* wifi */
-static const char *wifi[]       = { "/usr/bin/networkmanager_dmenu",        NULL };
-
-/* Vim */
-static const char *vim[]        = { "/home/zoya/.scripts/vimstart",         NULL };
 
 static Key keys[] = {
 	/* modifier                     key         function        argument */
@@ -133,13 +115,13 @@ static Key keys[] = {
 	{ MODKEY,                       XK_q,       killclient,     {0} },
 	{ MODKEY|ShiftMask,             XK_q,       quit,           {0} },
 	{ MODKEY,                       XK_w,       spawn,          SHCMD("$BROWSER") },
-    { MODKEY,                       XK_e,       spawn,          {.v = files } },
+    { MODKEY,                       XK_e,       spawn,          SHCMD(TERMINAL " -e vifm") },
     { MODKEY|ShiftMask,             XK_r,       quit,           {1} },
 	{ MODKEY,                       XK_t,       setlayout,      {.v = &layouts[0]} },
 	// { MODKEY,                       XK_y,       setlayout,      {.v = &layouts[0]} },
 	// { MODKEY,                       XK_u,       setlayout,      {.v = &layouts[0]} },
 	// { MODKEY,                       XK_i,       setlayout,      {.v = &layouts[0]} },
-    { MODKEY|ShiftMask,             XK_i,       spawn,          {.v = wifi } },
+    { MODKEY|ShiftMask,             XK_i,       spawn,          SHCMD("networkmanager_dmenu") },
 	{ MODKEY,                       XK_o,       incnmaster,     {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_o,       incnmaster,     {.i = -1 } },
     // { MODKEY,                       XK_p,       spawn,          SHCMD("") },
@@ -170,7 +152,7 @@ static Key keys[] = {
     { MODKEY,                       XK_z,       focusstack,     {.i = 0 } },
     // { MODKEY,                       XK_x,       spawn,          SHCMD("") },
     // { MODKEY,                       XK_c,       spawn,          SHCMD("") },
-    { MODKEY,                       XK_v,       spawn,          {.v = vim } },
+    { MODKEY,                       XK_v,       spawn,          SHCMD(TERMINAL " -e vim") },
     // { MODKEY,                       XK_b,       spawn,          SHCMD("") },
     // { MODKEY,                       XK_n,       spawn,          SHCMD("") },
 	{ MODKEY,                       XK_m,       setlayout,      {.v = &layouts[2]} },
@@ -190,12 +172,12 @@ static Key keys[] = {
 	// { MODKEY|ShiftMask,         XK_Page_Up,     shifttag,       {.i = -1 } },
 	// { MODKEY,                   XK_Page_Down,   shiftview,      { .i = +1 } },
 	// { MODKEY|ShiftMask,         XK_Page_Down,   shifttag,       { .i = +1 } },
-    { 0,              XF86XK_AudioLowerVolume,  spawn,          {.v = downvol } },
-    { 0,                     XF86XK_AudioMute,  spawn,          {.v = mutevol } },
-    { 0,              XF86XK_AudioRaiseVolume,  spawn,          {.v = upvol   } },
-    { 0,                            XK_Print,   spawn,          {.v = sshot } },
-    { 0,               XF86XK_MonBrightnessUp,  spawn,          {.v = upbright } },
-    { 0,             XF86XK_MonBrightnessDown,  spawn,          {.v = downbright } },
+    { 0,              XF86XK_AudioLowerVolume,  spawn,          SHCMD("volctl -5%") },
+    { 0,                     XF86XK_AudioMute,  spawn,          SHCMD("volctl toggle") },
+    { 0,              XF86XK_AudioRaiseVolume,  spawn,          SHCMD("volctl +5%") },
+    { 0,                            XK_Print,   spawn,          SHCMD("screenshot") },
+    { 0,               XF86XK_MonBrightnessUp,  spawn,          SHCMD("monctl +10%") },
+    { 0,             XF86XK_MonBrightnessDown,  spawn,          SHCMD("monctl 10%-") },
 };
 
 /* button definitions */
