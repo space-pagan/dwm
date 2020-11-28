@@ -100,9 +100,6 @@ static const char *sshot[]      = { "/home/zoya/.scripts/screenshot",       NULL
 /* File explorer */
 static const char *files[]      = { "/home/zoya/.scripts/vifmstart",        NULL };
 
-/* Screen lock */
-static const char *lock[]       = { "/usr/bin/dm-tool", "switch-to-greeter",NULL };
-
 /* wifi */
 static const char *wifi[]       = { "/usr/bin/networkmanager_dmenu",        NULL };
 
@@ -110,51 +107,95 @@ static const char *wifi[]       = { "/usr/bin/networkmanager_dmenu",        NULL
 static const char *vim[]        = { "/home/zoya/.scripts/vimstart",         NULL };
 
 static Key keys[] = {
-	/* modifier                     key        function        argument */
-	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = dmenucmd } },
-	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY,                       XK_b,      togglebar,      {0} },
-	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
-	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
-	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
-	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-    { MODKEY,                       XK_equal,  setmfact,       {.f = 1.5} },
-	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY,                       XK_q,      killclient,     {0} },
-	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
-	{ MODKEY,                       XK_space,  zoom,           {0} },
-	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
-	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
-	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
-	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
-	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-    { MODKEY,                       XK_e,      spawn,          {.v = files } },
-    { MODKEY|ShiftMask,             XK_i,      spawn,          {.v = wifi } },
-    { MODKEY|ShiftMask,             XK_l,      spawn,          {.v = lock } },
-    { MODKEY,                       XK_v,      spawn,          {.v = vim } },
-    { 0,              XF86XK_AudioLowerVolume, spawn,          {.v = downvol } },
-    { 0,                     XF86XK_AudioMute, spawn,          {.v = mutevol } },
-    { 0,              XF86XK_AudioRaiseVolume, spawn,          {.v = upvol   } },
-    { 0,                            XK_Print,  spawn,          {.v = sshot } },
-    { 0,               XF86XK_MonBrightnessUp, spawn,          {.v = upbright } },
-    { 0,             XF86XK_MonBrightnessDown, spawn,          {.v = downbright } },
-	TAGKEYS(                        XK_1,                      0)
-	TAGKEYS(                        XK_2,                      1)
-	TAGKEYS(                        XK_3,                      2)
-	TAGKEYS(                        XK_4,                      3)
-	TAGKEYS(                        XK_5,                      4)
-	TAGKEYS(                        XK_6,                      5)
-	TAGKEYS(                        XK_7,                      6)
-	TAGKEYS(                        XK_8,                      7)
-	TAGKEYS(                        XK_9,                      8)
-	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-    { MODKEY|ShiftMask,             XK_r,      quit,           {1} },
+	/* modifier                     key         function        argument */
+    
+/* NUM Row */
+    // { MODKEY,                       XK_Escape,  spawn,          SHCMD("") },
+    // { MODKEY,                       XK_grave,   spawn,          SHCMD("") },
+	TAGKEYS(                        XK_1,                       0)
+	TAGKEYS(                        XK_2,                       1)
+	TAGKEYS(                        XK_3,                       2)
+	TAGKEYS(                        XK_4,                       3)
+	TAGKEYS(                        XK_5,                       4)
+	TAGKEYS(                        XK_6,                       5)
+	TAGKEYS(                        XK_7,                       6)
+	TAGKEYS(                        XK_8,                       7)
+	TAGKEYS(                        XK_9,                       8)
+	{ MODKEY,                       XK_0,       view,           {.ui = ~0 } },
+	{ MODKEY|ShiftMask,             XK_0,       tag,            {.ui = ~0 } },
+    // { MODKEY,                       XK_minux,   spawn,          SHCMD("") },
+    { MODKEY,                       XK_equal,   setmfact,       {.f = 1.5} },
+
+
+
+/* QWERTY Row */
+	{ MODKEY,                       XK_Tab,     view,           {0} },
+	{ MODKEY,                       XK_q,       killclient,     {0} },
+	{ MODKEY|ShiftMask,             XK_q,       quit,           {0} },
+	{ MODKEY,                       XK_w,       spawn,          SHCMD("$BROWSER") },
+    { MODKEY,                       XK_e,       spawn,          {.v = files } },
+    { MODKEY|ShiftMask,             XK_r,       quit,           {1} },
+	{ MODKEY,                       XK_t,       setlayout,      {.v = &layouts[0]} },
+	// { MODKEY,                       XK_y,       setlayout,      {.v = &layouts[0]} },
+	// { MODKEY,                       XK_u,       setlayout,      {.v = &layouts[0]} },
+	// { MODKEY,                       XK_i,       setlayout,      {.v = &layouts[0]} },
+    { MODKEY|ShiftMask,             XK_i,       spawn,          {.v = wifi } },
+	{ MODKEY,                       XK_o,       incnmaster,     {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_o,       incnmaster,     {.i = -1 } },
+    // { MODKEY,                       XK_p,       spawn,          SHCMD("") },
+    // { MODKEY,               XK_bracketleft,     spawn,          SHCMD("") },
+    // { MODKEY,               XK_bracketright,    spawn,          SHCMD("") },
+    // { MODKEY,               XK_backslash,       spawn,          SHCMD("") },
+  
+
+
+/* ASDFGH Row */
+    // { MODKEY,                       XK_a,       spawn,          SHCMD("") },
+    // { MODKEY,                       XK_s,       spawn,          SHCMD("") },
+    // { MODKEY,                       XK_d,       spawn,          SHCMD("") },
+	{ MODKEY,                       XK_f,       setlayout,      {.v = &layouts[1]} },
+    // { MODKEY,                       XK_g,       spawn,          SHCMD("") },
+	{ MODKEY,                       XK_h,       setmfact,       {.f = -0.05} },
+	{ MODKEY,                       XK_j,       focusstack,     {.i = +1 } },
+	{ MODKEY,                       XK_k,       focusstack,     {.i = -1 } },
+	{ MODKEY,                       XK_l,       setmfact,       {.f = +0.05} },
+    // { MODKEY,               XK_semicolon,       spawn,          SHCMD("") },
+    // { MODKEY,               XK_apostrophe,      spawn,          SHCMD("") },
+    { MODKEY|ShiftMask,             XK_Return,  spawn,          {.v = dmenucmd } },
+	{ MODKEY,                       XK_Return,  spawn,          {.v = termcmd } },
+
+
+
+/* ZXCVBN Row */
+    { MODKEY,                       XK_z,       focusstack,     {.i = 0 } },
+    // { MODKEY,                       XK_x,       spawn,          SHCMD("") },
+    // { MODKEY,                       XK_c,       spawn,          SHCMD("") },
+    { MODKEY,                       XK_v,       spawn,          {.v = vim } },
+    // { MODKEY,                       XK_b,       spawn,          SHCMD("") },
+    // { MODKEY,                       XK_n,       spawn,          SHCMD("") },
+	{ MODKEY,                       XK_m,       setlayout,      {.v = &layouts[2]} },
+	// { MODKEY,                       XK_comma,   spawn,          SHCMD("") },
+	// { MODKEY,                       XK_period,  spawn,          SHCMD("") },
+	
+  
+  
+/* Other Keys */
+    { MODKEY,                       XK_space,   zoom,           {0} },
+	{ MODKEY|ShiftMask,             XK_space,   togglefloating, {0} },
+    { MODKEY,                       XK_Left,    focusmon,       {.i = -1 } },
+    { MODKEY|ShiftMask,             XK_Left,    tagmon,         {.i = -1 } },
+    { MODKEY,                       XK_Right,   focusmon,       {.i = +1 } },
+    { MODKEY|ShiftMask,             XK_Right,   tagmon,         {.i = +1 } },
+	// { MODKEY,                   XK_Page_Up,     shiftview,      {.i = -1 } },
+	// { MODKEY|ShiftMask,         XK_Page_Up,     shifttag,       {.i = -1 } },
+	// { MODKEY,                   XK_Page_Down,   shiftview,      { .i = +1 } },
+	// { MODKEY|ShiftMask,         XK_Page_Down,   shifttag,       { .i = +1 } },
+    { 0,              XF86XK_AudioLowerVolume,  spawn,          {.v = downvol } },
+    { 0,                     XF86XK_AudioMute,  spawn,          {.v = mutevol } },
+    { 0,              XF86XK_AudioRaiseVolume,  spawn,          {.v = upvol   } },
+    { 0,                            XK_Print,   spawn,          {.v = sshot } },
+    { 0,               XF86XK_MonBrightnessUp,  spawn,          {.v = upbright } },
+    { 0,             XF86XK_MonBrightnessDown,  spawn,          {.v = downbright } },
 };
 
 /* button definitions */
